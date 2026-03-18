@@ -3,6 +3,7 @@ import astroLogo from '../assets/astro.svg';
 import background from '../assets/background.svg';
 import avatar from '../assets/avatar.png';
 import '../styles/global.css'
+import SocialButton from './SocialButton.astro';
 ---
 
 <div id="container" class="google-sans-flex">
@@ -12,6 +13,12 @@ import '../styles/global.css'
 		<div>
 			<h1 class="julius-sans-one-regular">Eduardo <br>Nolasco P.</h1>
 			<p>Desarrollador móvil / Desarrollador back-end</p>
+			<div id="socials-button">
+				<SocialButton uri="https://www.linkedin.com/in/eduardo-nolasco-666b86151" icon="hgi-linkedin-02hgi hgi-duotone hgi-linkedin-02" color="#165cb1"/>
+				<SocialButton uri="https://github.com/eduardonp1" icon="hgi hgi-duotone hgi-github" color="#5c5e60"/>
+				<SocialButton uri="https://x.com/lalonolasc" icon="hgi hgi-duotone hgi-new-twitter" color="#060809"/>
+				<SocialButton uri="mailto:mail@eduardonp.com" icon="hgi hgi-duotone hgi-mail-01" color="#00776c"/>
+			</div>
 		</div>
 	</div>
 	<div id="image"><img id="avatar" src={avatar.src} alt="Foto de perfil"></div>
@@ -53,6 +60,8 @@ import '../styles/global.css'
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
+		align-items: center;
+		align-content: center;
 	}
 
 	#avatar {
@@ -79,5 +88,34 @@ import '../styles/global.css'
 
 	p {
 		font-size: 1.5rem;
+	}
+	
+	#socials-button {
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: row;
+	}
+
+
+	@media (max-width: 1010px) {
+		h1 {
+			font-size: 50px;
+		}
+
+		#container {
+			flex-direction: column-reverse;
+		}
+
+		#avatar {
+			width: 65vw;
+			flex-grow: 1;
+		}
+
+		#info {
+			margin-left: 16px;
+			margin-right: 16px;
+			flex-grow: 2;
+			align-items: start;
+		}
 	}
 </style>

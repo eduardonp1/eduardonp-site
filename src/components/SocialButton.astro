@@ -1,0 +1,28 @@
+---
+const { uri, icon, color } = Astro.props
+---
+
+<a href={uri} target="_blank" rel="noopener noreferrer"><i class={icon}></i></a>
+
+<style define:vars={{color}}>
+  a, i {
+    margin: 0;
+    padding: 0;
+  }
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    margin-right: 16px;
+    padding: 16px;
+    color: #f1f1f1;
+    background-color: var(--color);
+    border-radius: 16px;
+    text-decoration: dashed;
+  }
+  a > i {
+    font-size: 20px;
+  }
+</style>
