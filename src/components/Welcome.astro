@@ -6,17 +6,27 @@ import '../styles/global.css'
 ---
 
 <div id="container" class="google-sans-flex">
-	<img id="background" src={background.src} alt="" fetchpriority="high" />
+	<span id="backround-color"/>
+	<img id="background" src={background.src} alt="degradado de fondo" fetchpriority="high" />
 	<div id="info">
 		<div>
 			<h1 class="julius-sans-one-regular">Eduardo <br>Nolasco P.</h1>
 			<p>Desarrollador móvil / Desarrollador back-end</p>
 		</div>
 	</div>
-	<div id="image"><img id="avatar" src={avatar.src}></div>
+	<div id="image"><img id="avatar" src={avatar.src} alt="Foto de perfil"></div>
 </div>
 
 <style>
+	#backround-color {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: -2;
+		background-color: #101417;
+	}
 	#background {
 		position: fixed;
 		top: 0;
@@ -25,15 +35,29 @@ import '../styles/global.css'
 		height: 100%;
 		z-index: -1;
 		filter: blur(100px);
+		opacity: .45;
 	}
 
 	#container {
+		color: #e5e5e5;
 		height: 100%;
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
 		align-items: center;
 		align-content: center;
+	}
+
+	#image {
+		flex-grow: 1;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	#avatar {
+		width: 30vw;
+		height: auto;
 	}
 
 	#info {
@@ -55,17 +79,5 @@ import '../styles/global.css'
 
 	p {
 		font-size: 1.5rem;
-	}
-
-	#image {
-		flex-grow: 1;
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-	}
-
-	#avatar {
-		width: 30vw;
-		height: auto;
 	}
 </style>
