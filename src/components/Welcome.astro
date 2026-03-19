@@ -12,7 +12,7 @@ import SocialButton from './SocialButton.astro';
 	<div id="info">
 		<div>
 			<h1 id="typing-h1" class="julius-sans-one-regular">Eduardo <br>Nolasco P.</h1>
-			<p>Desarrollador móvil / Desarrollador back-end</p>
+			<p id="interactive-text" class="google-sans-flex-v1">Desarrollador móvil / Desarrollador back-end</p>
 			<div id="socials-button">
 				<SocialButton margin = "0 16px 16px 0" uri="https://www.linkedin.com/in/eduardo-nolasco-666b86151" icon="hgi-linkedin-02hgi hgi-duotone hgi-linkedin-02" color="#165cb1"/>
 				<SocialButton margin = "0 16px 16px 0" uri="https://github.com/eduardonp1" icon="hgi hgi-duotone hgi-github" color="#5c5e60"/>
@@ -87,7 +87,7 @@ import SocialButton from './SocialButton.astro';
 
 	h1 {
 		font-size: 80px;
-		display: inline-block;
+		width: fit-content;
 		position: relative;
 	}
 
@@ -109,6 +109,18 @@ import SocialButton from './SocialButton.astro';
 
 	p {
 		font-size: 1.5rem;
+	}
+
+	#interactive-text {
+		width: fit-content;
+		cursor: default;
+		user-select: none;
+	}
+
+	#interactive-text :global(span) {
+		display: inline-block;
+		transition: font-variation-settings 0.2s ease, transform 0.2s ease;
+		pointer-events: none;
 	}
 	
 	#socials-button {
@@ -218,5 +230,57 @@ import SocialButton from './SocialButton.astro';
 		}
 
 		setTimeout(type, 500);
+	}
+
+	// Animación de texto interactivo para "Desarrollador móvil..."
+	const interactiveText = document.getElementById('interactive-text');
+	if (interactiveText) {
+		const textContent = interactiveText.textContent || "";
+		interactiveText.innerHTML = textContent.split('').map(char => 
+			`<span>${char === ' ' ? '&nbsp;' : char}</span>`
+		).join('');
+
+		const spans = interactiveText.querySelectorAll('span');
+
+		interactiveText.addEventListener('mousemove', (e) => {
+			const mouseX = e.clientX;
+			const mouseY = e.clientY;
+
+			spans.forEach(span => {
+				const rect = span.getBoundingClientRect();
+				const spanX = rect.left + rect.width / 2;
+				const spanY = rect.top + rect.height / 2;
+
+				const distance = Math.sqrt(
+					Math.pow(mouseX - spanX, 2) + Math.pow(mouseY - spanY, 2)
+				);
+
+				// Rango de influencia (en píxeles)
+				const maxDistance = 100; 
+
+				if (distance < maxDistance) {
+					// Interpolación lineal inversa: cuanto más cerca, mayor el efecto
+					const ratio = 1 - (distance / maxDistance);
+					
+					// Peso (wght): de base (100) a 500 (más negrita)
+					const wght = 100 + (400 * ratio);
+					// Ancho (wdth): de base (100) a 50 (menos ancho)
+					const wdth = 100 - (100 * ratio);
+
+					span.style.fontVariationSettings = `'wght' ${wght}, 'wdth' ${wdth}`;
+					span.style.transform = `scale(${1 + (0.05 * ratio)})`;
+				} else {
+					span.style.fontVariationSettings = "'wght' 100, 'wdth' 100";
+					span.style.transform = "scale(1)";
+				}
+			});
+		});
+
+		interactiveText.addEventListener('mouseleave', () => {
+			spans.forEach(span => {
+				span.style.fontVariationSettings = "'wght' 100, 'wdth' 100";
+				span.style.transform = "scale(1)";
+			});
+		});
 	}
 </script>
