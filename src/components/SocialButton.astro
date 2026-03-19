@@ -21,6 +21,10 @@ const { uri, icon, color, margin = "0px 0px 0px 0px" } = Astro.props
     background-color: var(--color);
     border-radius: 16px;
     text-decoration: dashed;
+    transition: filter 0.3s ease;
+  }
+  a:hover {
+    filter: brightness(0.8);
   }
   a > i {
     font-size: 20px;
