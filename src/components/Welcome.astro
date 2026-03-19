@@ -105,11 +105,45 @@ import SocialButton from './SocialButton.astro';
 		align-items: center;
 		background-color: #00776b66;
 		padding-right: 18px;
-    border-radius: 16px;
+		border-radius: 16px;
+		transition: background-color 0.3s ease, padding-right 0.3s ease;
 	}
 
 	#mail-button > p {
 		font-size: 1rem;
+	}
+
+	@media (min-width: 1011px) {
+		#mail-button {
+			padding-right: 0;
+			cursor: pointer;
+		}
+
+		#mail-button:hover {
+			padding-right: 18px;
+		}
+
+		#mail-button > p {
+			max-width: 0;
+			opacity: 0;
+			overflow: hidden;
+			white-space: nowrap;
+			transition: max-width 0.4s ease, opacity 0.3s ease;
+		}
+
+		#mail-button:hover > p {
+			max-width: 300px;
+			opacity: 1;
+		}
+
+		#mail-button :global(a) {
+			margin-right: 0 !important;
+			transition: margin-right 0.4s ease;
+		}
+
+		#mail-button:hover :global(a) {
+			margin-right: 16px !important;
+		}
 	}
 
 
