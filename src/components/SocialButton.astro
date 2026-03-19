@@ -1,10 +1,10 @@
 ---
-const { uri, icon, color } = Astro.props
+const { uri, icon, color, margin = "0px 0px 0px 0px" } = Astro.props
 ---
 
 <a href={uri} target="_blank" rel="noopener noreferrer"><i class={icon}></i></a>
 
-<style define:vars={{color}}>
+<style define:vars={{color, margin}}>
   a, i {
     margin: 0;
     padding: 0;
@@ -15,7 +15,7 @@ const { uri, icon, color } = Astro.props
     align-items: center;
     width: 25px;
     height: 25px;
-    margin-right: 16px;
+    margin: var(--margin);
     padding: 16px;
     color: #f1f1f1;
     background-color: var(--color);

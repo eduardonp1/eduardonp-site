@@ -14,10 +14,13 @@ import SocialButton from './SocialButton.astro';
 			<h1 class="julius-sans-one-regular">Eduardo <br>Nolasco P.</h1>
 			<p>Desarrollador móvil / Desarrollador back-end</p>
 			<div id="socials-button">
-				<SocialButton uri="https://www.linkedin.com/in/eduardo-nolasco-666b86151" icon="hgi-linkedin-02hgi hgi-duotone hgi-linkedin-02" color="#165cb1"/>
-				<SocialButton uri="https://github.com/eduardonp1" icon="hgi hgi-duotone hgi-github" color="#5c5e60"/>
-				<SocialButton uri="https://x.com/lalonolasc" icon="hgi hgi-duotone hgi-new-twitter" color="#060809"/>
-				<SocialButton uri="mailto:mail@eduardonp.com" icon="hgi hgi-duotone hgi-mail-01" color="#00776c"/>
+				<SocialButton margin = "0 16px 16px 0" uri="https://www.linkedin.com/in/eduardo-nolasco-666b86151" icon="hgi-linkedin-02hgi hgi-duotone hgi-linkedin-02" color="#165cb1"/>
+				<SocialButton margin = "0 16px 16px 0" uri="https://github.com/eduardonp1" icon="hgi hgi-duotone hgi-github" color="#5c5e60"/>
+				<SocialButton margin = "0 16px 16px 0" uri="https://x.com/lalonolasc" icon="hgi hgi-duotone hgi-new-twitter" color="#060809"/>
+				<div id="mail-button">
+					<SocialButton margin = "0 16px 0 0" uri="mailto:mail@eduardonp.com" icon="hgi hgi-duotone hgi-mail-01" color="#00776c"/>
+					<p class="google-sans-flex-v1">mail@eduardonp.com</p>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -94,6 +97,19 @@ import SocialButton from './SocialButton.astro';
 		display: flex;
 		flex-wrap: wrap;
 		flex-direction: row;
+		align-items: start;
+	}
+
+	#mail-button {
+		display: flex;
+		align-items: center;
+		background-color: #00776b66;
+		padding-right: 18px;
+    border-radius: 16px;
+	}
+
+	#mail-button > p {
+		font-size: 1rem;
 	}
 
 
