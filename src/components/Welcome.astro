@@ -11,7 +11,7 @@ import SocialButton from './SocialButton.astro';
 	<img id="background" src={background.src} alt="degradado de fondo" fetchpriority="high" />
 	<div id="info">
 		<div>
-			<h1 class="julius-sans-one-regular">Eduardo <br>Nolasco P.</h1>
+			<h1 id="typing-h1" class="julius-sans-one-regular">Eduardo <br>Nolasco P.</h1>
 			<p>Desarrollador móvil / Desarrollador back-end</p>
 			<div id="socials-button">
 				<SocialButton margin = "0 16px 16px 0" uri="https://www.linkedin.com/in/eduardo-nolasco-666b86151" icon="hgi-linkedin-02hgi hgi-duotone hgi-linkedin-02" color="#165cb1"/>
@@ -87,6 +87,24 @@ import SocialButton from './SocialButton.astro';
 
 	h1 {
 		font-size: 80px;
+		display: inline-block;
+		position: relative;
+	}
+
+	h1::after {
+		content: '|';
+		margin-left: 5px;
+		animation: blink 0.7s step-end infinite;
+		font-weight: 300;
+	}
+
+	h1.typing-finished::after {
+		content: '';
+	}
+
+	@keyframes blink {
+		from, to { color: transparent; }
+		50% { color: #e5e5e5; }
 	}
 
 	p {
@@ -169,3 +187,36 @@ import SocialButton from './SocialButton.astro';
 		}
 	}
 </style>
+
+<script>
+	const h1 = document.getElementById('typing-h1');
+	if (h1) {
+		const fullText = "Eduardo <br>Nolasco P.";
+		h1.innerHTML = '';
+		let index = 0;
+		const speed = 50;
+
+		function type() {
+			if (index < fullText.length) {
+				if (fullText.charAt(index) === '<') {
+					const tagEnd = fullText.indexOf('>', index);
+					if (tagEnd !== -1) {
+						h1.innerHTML += fullText.substring(index, tagEnd + 1);
+						index = tagEnd + 1;
+					} else {
+						h1.innerHTML += fullText.charAt(index);
+						index++;
+					}
+				} else {
+					h1.innerHTML += fullText.charAt(index);
+					index++;
+				}
+				setTimeout(type, speed);
+			} else {
+				h1.classList.add('typing-finished');
+			}
+		}
+
+		setTimeout(type, 500);
+	}
+</script>
