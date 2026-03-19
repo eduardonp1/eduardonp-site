@@ -11,13 +11,16 @@ import SocialButton from './SocialButton.astro';
 	<img id="background" src={background.src} alt="degradado de fondo" fetchpriority="high" />
 	<div id="info">
 		<div>
-			<h1 class="julius-sans-one-regular">Eduardo <br>Nolasco P.</h1>
-			<p>Desarrollador móvil / Desarrollador back-end</p>
+			<h1 id="typing-h1" class="julius-sans-one-regular">Eduardo <br>Nolasco P.</h1>
+			<p id="interactive-text" class="google-sans-flex-v1">Desarrollador móvil / Desarrollador back-end</p>
 			<div id="socials-button">
-				<SocialButton uri="https://www.linkedin.com/in/eduardo-nolasco-666b86151" icon="hgi-linkedin-02hgi hgi-duotone hgi-linkedin-02" color="#165cb1"/>
-				<SocialButton uri="https://github.com/eduardonp1" icon="hgi hgi-duotone hgi-github" color="#5c5e60"/>
-				<SocialButton uri="https://x.com/lalonolasc" icon="hgi hgi-duotone hgi-new-twitter" color="#060809"/>
-				<SocialButton uri="mailto:mail@eduardonp.com" icon="hgi hgi-duotone hgi-mail-01" color="#00776c"/>
+				<SocialButton margin = "0 16px 16px 0" uri="https://www.linkedin.com/in/eduardo-nolasco-666b86151" icon="hgi-linkedin-02hgi hgi-duotone hgi-linkedin-02" color="#165cb1"/>
+				<SocialButton margin = "0 16px 16px 0" uri="https://github.com/eduardonp1" icon="hgi hgi-duotone hgi-github" color="#5c5e60"/>
+				<SocialButton margin = "0 16px 16px 0" uri="https://x.com/lalonolasc" icon="hgi hgi-duotone hgi-new-twitter" color="#060809"/>
+				<div id="mail-button">
+					<SocialButton margin = "0 16px 0 0" uri="mailto:mail@eduardonp.com" icon="hgi hgi-duotone hgi-mail-01" color="#00776c"/>
+					<p class="google-sans-flex-v1">mail@eduardonp.com</p>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -84,16 +87,93 @@ import SocialButton from './SocialButton.astro';
 
 	h1 {
 		font-size: 80px;
+		width: fit-content;
+		position: relative;
+	}
+
+	h1::after {
+		content: '|';
+		margin-left: 5px;
+		animation: blink 0.7s step-end infinite;
+		font-weight: 300;
+	}
+
+	h1.typing-finished::after {
+		content: '';
+	}
+
+	@keyframes blink {
+		from, to { color: transparent; }
+		50% { color: #e5e5e5; }
 	}
 
 	p {
 		font-size: 1.5rem;
+	}
+
+	#interactive-text {
+		width: fit-content;
+		cursor: default;
+		user-select: none;
+	}
+
+	#interactive-text :global(span) {
+		display: inline-block;
+		transition: font-variation-settings 0.2s ease, transform 0.2s ease;
+		pointer-events: none;
 	}
 	
 	#socials-button {
 		display: flex;
 		flex-wrap: wrap;
 		flex-direction: row;
+		align-items: start;
+	}
+
+	#mail-button {
+		display: flex;
+		align-items: center;
+		background-color: #00776b66;
+		padding-right: 18px;
+		border-radius: 16px;
+		transition: background-color 0.3s ease, padding-right 0.3s ease;
+	}
+
+	#mail-button > p {
+		font-size: 1rem;
+	}
+
+	@media (min-width: 1011px) {
+		#mail-button {
+			padding-right: 0;
+			cursor: pointer;
+		}
+
+		#mail-button:hover {
+			padding-right: 18px;
+		}
+
+		#mail-button > p {
+			max-width: 0;
+			opacity: 0;
+			overflow: hidden;
+			white-space: nowrap;
+			transition: max-width 0.4s ease, opacity 0.3s ease;
+		}
+
+		#mail-button:hover > p {
+			max-width: 300px;
+			opacity: 1;
+		}
+
+		#mail-button :global(a) {
+			margin-right: 0 !important;
+			transition: margin-right 0.4s ease;
+		}
+
+		#mail-button:hover :global(a) {
+			margin-right: 16px !important;
+		}
 	}
 
 
@@ -119,3 +199,88 @@ import SocialButton from './SocialButton.astro';
 		}
 	}
 </style>
+
+<script>
+	const h1 = document.getElementById('typing-h1');
+	if (h1) {
+		const fullText = "Eduardo <br>Nolasco P.";
+		h1.innerHTML = '';
+		let index = 0;
+		const speed = 50;
+
+		function type() {
+			if (index < fullText.length) {
+				if (fullText.charAt(index) === '<') {
+					const tagEnd = fullText.indexOf('>', index);
+					if (tagEnd !== -1) {
+						h1.innerHTML += fullText.substring(index, tagEnd + 1);
+						index = tagEnd + 1;
+					} else {
+						h1.innerHTML += fullText.charAt(index);
+						index++;
+					}
+				} else {
+					h1.innerHTML += fullText.charAt(index);
+					index++;
+				}
+				setTimeout(type, speed);
+			} else {
+				h1.classList.add('typing-finished');
+			}
+		}
+
+		setTimeout(type, 500);
+	}
+
+	// Animación de texto interactivo para "Desarrollador móvil..."
+	const interactiveText = document.getElementById('interactive-text');
+	if (interactiveText) {
+		const textContent = interactiveText.textContent || "";
+		interactiveText.innerHTML = textContent.split('').map(char => 
+			`<span>${char === ' ' ? '&nbsp;' : char}</span>`
+		).join('');
+
+		const spans = interactiveText.querySelectorAll('span');
+
+		interactiveText.addEventListener('mousemove', (e) => {
+			const mouseX = e.clientX;
+			const mouseY = e.clientY;
+
+			spans.forEach(span => {
+				const rect = span.getBoundingClientRect();
+				const spanX = rect.left + rect.width / 2;
+				const spanY = rect.top + rect.height / 2;
+
+				const distance = Math.sqrt(
+					Math.pow(mouseX - spanX, 2) + Math.pow(mouseY - spanY, 2)
+				);
+
+				// Rango de influencia (en píxeles)
+				const maxDistance = 100; 
+
+				if (distance < maxDistance) {
+					// Interpolación lineal inversa: cuanto más cerca, mayor el efecto
+					const ratio = 1 - (distance / maxDistance);
+					
+					// Peso (wght): de base (100) a 500 (más negrita)
+					const wght = 100 + (400 * ratio);
+					// Ancho (wdth): de base (100) a 50 (menos ancho)
+					const wdth = 100 - (100 * ratio);
+
+					span.style.fontVariationSettings = `'wght' ${wght}, 'wdth' ${wdth}`;
+					span.style.transform = `scale(${1 + (0.05 * ratio)})`;
+				} else {
+					span.style.fontVariationSettings = "'wght' 100, 'wdth' 100";
+					span.style.transform = "scale(1)";
+				}
+			});
+		});
+
+		interactiveText.addEventListener('mouseleave', () => {
+			spans.forEach(span => {
+				span.style.fontVariationSettings = "'wght' 100, 'wdth' 100";
+				span.style.transform = "scale(1)";
+			});
+		});
+	}
+</script>

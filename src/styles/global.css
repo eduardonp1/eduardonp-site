@@ -11,6 +11,18 @@
     "ROND" 0;
 }
 
+.google-sans-flex-v1 {
+  font-family: "Google Sans Flex", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+  font-variation-settings:
+    "slnt" 0,
+    "wdth" 50,
+    "GRAD" 0,
+    "ROND" 0;
+}
+
 .julius-sans-one-regular {
   font-family: "Julius Sans One", sans-serif;
   font-weight: 400;
