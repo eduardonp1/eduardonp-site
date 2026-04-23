@@ -1,11 +1,16 @@
 ---
 const { uri, icon, color, margin = "0px 0px 0px 0px" } = Astro.props
+
+const icons = import.meta.glob('../assets/icons/*.svg', { as: 'raw', eager: true });
+const svgContent = icons[`../assets/icons/${icon}.svg`];
 ---
 
-<a href={uri} target="_blank" rel="noopener noreferrer"><i class={icon}></i></a>
+<a href={uri} target="_blank" rel="noopener noreferrer">
+  <Fragment set:html={svgContent} />
+</a>
 
 <style define:vars={{color, margin}}>
-  a, i {
+  a {
     margin: 0;
     padding: 0;
   }
@@ -26,7 +31,8 @@ const { uri, icon, color, margin = "0px 0px 0px 0px" } = Astro.props
   a:hover {
     filter: brightness(0.8);
   }
-  a > i {
-    font-size: 20px;
+  a :global(svg) {
+    width: 20px;
+    height: 20px;
   }
 </style>
